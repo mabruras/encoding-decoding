@@ -1,4 +1,17 @@
+// #include "../lib/globallib.h"
 #pragma once
+
+#include <stdio.h>
+#include <ctype.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/stat.h>
+
+#include "fileHandling.h"
+#include "messages.h"
+#include "secretCoder.h"
+#include "userInteraction.h"
+#include "files.h"
 
 #define TYPE_ERROR "[ERROR]"
 #define TYPE_INPUT "[INPUT]"
@@ -13,8 +26,8 @@
 #define INFO_KEY_LOADED "Key loaded successfully"
 #define INFO_ENCODE_OR_DECODE "Do you want to encode or decode this file (e/d)? [q for quit]:"
 #define INFO_FILES_OK "Both files was read without interruption."
-
-void printMessage(char* type, char* msg){
-	printf("%s : %s\n", type, msg);
-}
-
+#define INFO_ENCODING_START "Starting to encode the message..."
+#define INFO_DECODING_START "Starting to decode the message..."
+#define INFO_ENCODING_END "Encoding of message complete!"
+#define INFO_DECODING_END "Decoding of message complete!"
+#define CHOICE_EXIT "You choose to quit.\nShutting down program..."

@@ -1,0 +1,18 @@
+CC=gcc
+CFLAGS= -std=c11
+
+#files
+OBJECTS = fileHandling.o secretCoder.o userInteraction.o
+OUTPUT = HomeExam
+
+all: $(OBJECTS)
+	$(CC) $(CFLAGS) -o $(OUTPUT) $(OBJECTS)
+
+userInteraction.o: userInteraction.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+fileHandling.o: fileHandling.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+secretCoder.o: secretCoder.c
+	$(CC) $(CFLAGS) -c $< -o $@

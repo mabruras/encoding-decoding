@@ -1,4 +1,3 @@
-// #include "../lib/globallib.h"
 #pragma once
 
 #include <stdio.h>
@@ -12,12 +11,4 @@
 #include "secretCoder.h"
 #include "userInteraction.h"
 #include "files.h"
-
-int checkFiles(FileContainer files);
-
-int fileExists (const char *fileName);
-
-int getSize(char *v);
-
-FileContainer openAndReadFiles(FileContainer files);
 

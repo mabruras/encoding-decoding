@@ -1,29 +1,21 @@
+// #include "../lib/globallib.h"
 #pragma once
 
-void encodeOrDecode(char **argv, char input) {
-	if (input == 'e' || input == 'E') {
-		encodeFile(argv);
-	} else {
-		decodeFile(argv);
-	}
-}
+#include <stdio.h>
+#include <ctype.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/stat.h>
 
-int inputNotValid(char c) {
-	if (c == 'd' || c == 'D' || c == 'e' || c == 'E' || c == 'q') {
-		return 0; // Is valid
-	}
-	
-	return 1; // Is not valid
-}
+#include "fileHandling.h"
+#include "messages.h"
+#include "secretCoder.h"
+#include "userInteraction.h"
+#include "files.h"
 
-char getUserInput() {
-	char userInput;
-	do {
-		printMessage(TYPE_INPUT, INFO_ENCODE_OR_DECODE);
-		scanf("%c", &userInput);
-		getchar();
-	} while (inputNotValid(userInput) == 1);
-	
-	return userInput;
-}
+int inputNotValid(char c);
+
+char getUserInput();
+
+int encodeOrDecode(char input);
 

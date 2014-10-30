@@ -13,11 +13,9 @@
 #include "userInteraction.h"
 #include "files.h"
 
-int checkFiles(FileContainer files);
-
-int fileExists (const char *fileName);
-
-int getSize(char *v);
-
-FileContainer openAndReadFiles(FileContainer files);
+typedef struct fileContainer {
+	char* msg;
+	char* key;
+	int keyCount;
+} FileContainer;
 
