@@ -1,8 +1,0 @@
-#include "../lib/globallib.h"
-
-int inputNotValid(char c);
-
-char getUserInput();
-
-int encodeOrDecode(char input);
-
