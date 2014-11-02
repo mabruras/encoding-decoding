@@ -1,5 +1,5 @@
 CC=gcc
-#CFLAGS= -std=c11
+CFLAGS=-g
 
 #files
 OBJECTS = homeExam.o fileHandling.o secretCoder.o userInteraction.o

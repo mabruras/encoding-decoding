@@ -12,6 +12,7 @@
 #include "../lib/files.h"
 
 char * encryptedFileName = "EncryptedMessage.txt";
+char * decryptedFileName = "DecryptedMessage.txt";
 
 FileContainer collapseKey(char *keyName) {
 	char currentChar;
@@ -20,7 +21,8 @@ FileContainer collapseKey(char *keyName) {
 	if (keyFile == NULL) {
 		printMessage(TYPE_ERROR, ERROR_INVALID_KEY);
 	} else {
-		tempContainer.key = malloc(getSize(keyName) * sizeof(int));
+		tempContainer.key = malloc(getSize(keyName));
+		memset(tempContainer.key, 0, sizeof(tempContainer.key));
 		tempContainer.keyCount = 0;
 
 		printf("Key: ");
@@ -29,8 +31,7 @@ FileContainer collapseKey(char *keyName) {
 				if (isupper(currentChar)) {
 					currentChar = tolower(currentChar);
 				}
-				strcat(tempContainer.key, &currentChar);
-				tempContainer.keyCount++;
+				tempContainer.key[tempContainer.keyCount++] = currentChar;
 printf("%c", currentChar);
 			}
 		}
@@ -39,8 +40,8 @@ printf("%c", currentChar);
 	return tempContainer;
 }
 
-void writeIntToFile(int number) {
-	FILE* encryptedFile = fopen(encryptedFileName, "a");
+void writeIntToFile(int number, char *fileName) {
+	FILE* encryptedFile = fopen(fileName, "a");
 	if (encryptedFile == NULL) {
 		printMessage(TYPE_ERROR, ERROR_LOAD_FILE);
 	} else {
@@ -51,8 +52,8 @@ void writeIntToFile(int number) {
 	fclose(encryptedFile);
 }
 
-void writeCharToFile(char c) {
-	FILE* encryptedFile = fopen(encryptedFileName, "a");
+void writeCharToFile(char c, char *fileName) {
+	FILE* encryptedFile = fopen(fileName, "a");
 	if (encryptedFile == NULL) {
 		printMessage(TYPE_ERROR, ERROR_INVALID_KEY);
 	} else {
@@ -65,16 +66,12 @@ void encodeFile (FileContainer files, char * msgName) {
 
 	int currentInt;
 	char currentChar;
-	FileContainer tempContainer;
+
 	FILE* msgFile = fopen(msgName, "r");
-	
-	tempContainer.msgCount = getSize(msgName);
-	tempContainer.msg = malloc(tempContainer.msgCount * sizeof(int));
-	files.msg = tempContainer.msg;
-	files.msgCount = tempContainer.msgCount;
 
+	files.msgCount = getSize(msgName);
+	files.msg = malloc(files.msgCount * sizeof(int));
 
-printf("%d", tempContainer.msgCount);
 	if (files.msgCount == 0 || files.keyCount == 0) {
 		printMessage(TYPE_ERROR, ERROR_UNKNOWN);
 	} else {
@@ -83,13 +80,12 @@ printf("%d", tempContainer.msgCount);
 		}
 		
 		while (!feof(msgFile) && fscanf(msgFile, "%c", &currentChar) == 1) {
-			
 			currentInt = findIntRepresentation(files, currentChar);
 			
 			if (currentInt != 0) {
-				writeIntToFile(currentInt);
+				writeIntToFile(currentInt, encryptedFileName);
 			} else {
-				writeCharToFile(currentChar);
+				writeCharToFile(currentChar, encryptedFileName);
 			}
 		}
 	}
@@ -118,10 +114,62 @@ int findIntRepresentation(FileContainer files, char c) {
 }
 
 void decodeFile (FileContainer files, char * msgName) {
-	printf("decoding...\n");
-	int i = 0;
-	while (i <= files.msgCount) {
-		i++;
+	int currentInt;
+	char currentChar;
+
+	FILE* msgFile = fopen(msgName, "r");
+
+	if (files.msgCount == 0 || files.keyCount == 0) {
+		printMessage(TYPE_ERROR, ERROR_UNKNOWN);
+	} else {
+		if (fileExists(decryptedFileName) == 1) {
+			remove(decryptedFileName);
+		}
+		
+		while (!feof(msgFile) && fscanf(msgFile, "%c", &currentChar) == 1) {
+			if (currentChar == '[') {
+				fscanf(msgFile, "%d", &currentInt);
+				currentChar = findCharRepresentation(files, currentInt);
+				writeCharToFile(currentChar, decryptedFileName);
+			} else if (currentChar != ']') {
+				writeCharToFile(currentChar, decryptedFileName);
+			}
+		}
 	}
+	fclose(msgFile);
 }
+
+char findCharRepresentation(FileContainer files, int index) {
+	char c;
+	
+	if (index == 0) {
+		printMessage(TYPE_ERROR, ERROR_UNKNOWN);
+		exit(0);
+	} else {
+		if (index < 0) {
+			index *= (-1);
+			c = files.key[index - 1];
+			c = toupper(c);
+		} else if (index > 0) {
+			c = files.key[index -1];
+		}
+	}
+	
+	return c;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

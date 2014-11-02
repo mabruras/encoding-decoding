@@ -39,18 +39,9 @@ int getSize(char* v) {
 }
 
 FileContainer openAndReadKey(char *keyName) {
-	FileContainer tempContainer;
 	FileContainer files;
-
-/*
-	tempContainer = readFile(argv[1]);
-	files.msg = tempContainer.msg;
-	files.msgCount = tempContainer.msgCount;
-*/
 	
-	tempContainer = collapseKey(keyName);
-	files.key = tempContainer.key;
-	files.keyCount = tempContainer.keyCount;
+	files = collapseKey(keyName);
 	printMessage(TYPE_INFO, INFO_KEY_LOADED);
 
 	return files;
