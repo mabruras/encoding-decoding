@@ -7,13 +7,21 @@
 #include <unistd.h>
 #include <sys/stat.h>
 
-#include "fileHandling.h"
-#include "messages.h"
-#include "secretCoder.h"
-#include "userInteraction.h"
-#include "files.h"
+#include "../lib/fileHandling.h"
+#include "../lib/messages.h"
+#include "../lib/secretCoder.h"
+#include "../lib/userInteraction.h"
+#include "../lib/files.h"
+
+void printMessage(char* type, char* msg);
 
 int inputNotValid(char c);
+
+int getWantedSecLvl();
+
+int secLvlNotValid(char c);
+
+int toInt(char c);
 
 char getUserInput();
 

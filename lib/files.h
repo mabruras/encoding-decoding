@@ -20,3 +20,8 @@ typedef struct fileContainer {
 	int msgCount;
 } FileContainer;
 
+typedef struct indexHolder {
+	char currentChar;
+	int currentIndex;
+	int lastIndex;
+} IndexHolder;

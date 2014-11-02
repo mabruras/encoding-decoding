@@ -22,6 +22,7 @@ int main (int argc, char **argv) {
 		FileContainer files;
 		
 		if (checkFiles(argv) != 0) {
+			int securityDistance = getWantedSecLvl();
 			files = openAndReadKey(argv[2]);
 			char action = getUserInput();
 			int choice = encodeOrDecode(action);
@@ -32,7 +33,7 @@ int main (int argc, char **argv) {
 				exit(0);
 			case 1:
 				printMessage(TYPE_INFO, INFO_ENCODING_START);
-				encodeFile(files, argv[1]);
+				encodeFile(files, argv[1], securityDistance);
 				printMessage(TYPE_INFO, INFO_ENCODING_END);
 				break;
 			case 2:

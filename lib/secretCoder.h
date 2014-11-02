@@ -14,8 +14,6 @@
 #include "../lib/userInteraction.h"
 #include "../lib/files.h"
 
-char * encryptedFileName;
-char * decryptedFileName;
 
 FileContainer collapseKey(char *keyName);
 
@@ -23,9 +21,11 @@ void writeIntToFile(int number, char *fileName);
 
 void writeCharToFile(char c, char *fileName);
 
-void encodeFile (FileContainer files, char * msgName);
+void encodeFile (FileContainer files, char * msgName, int d);
 
-int findIntRepresentation(FileContainer files, char c);
+int findIntRepresentation(FileContainer files, IndexHolder iHolder, int d);
+
+int makePositive(int i);
 
 void decodeFile (FileContainer files, char * msgName);
 

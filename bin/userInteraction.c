@@ -18,14 +18,36 @@ int inputNotValid(char c) {
 	if (c == 'd' || c == 'D'			// Decode
 			|| c == 'e' || c == 'E' 	// Encode
 			|| c == 'q' || c == 'Q') {	// Quit
-		return 0; // Is valid
+		return 0; 	// Valid
 	}
 	
-	return 1; // Is not valid
+	return 1;		// Not valid
+}
+
+int getWantedSecLvl() {
+	char userInput;
+	do {
+		printMessage(TYPE_INPUT, INFO_SAFETY_LEVEL);
+		scanf("%c", &userInput);
+		getchar();
+	} while (secLvlNotValid(userInput) == 1);
+	return toInt(userInput);
+}
+
+int secLvlNotValid(char c) {
+	if (isdigit(c) && c != '0') {
+		return 0;	// Valid
+	}
+	return 1;		// Not valid
+}
+
+int toInt(char c){ 
+	return (int) c -'0';
 }
 
 char getUserInput() {
 	char userInput;
+	getchar();
 	do {
 		printMessage(TYPE_INPUT, INFO_ENCODE_OR_DECODE);
 		scanf("%c", &userInput);

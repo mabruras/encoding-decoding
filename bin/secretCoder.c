@@ -32,11 +32,9 @@ FileContainer collapseKey(char *keyName) {
 					currentChar = tolower(currentChar);
 				}
 				tempContainer.key[tempContainer.keyCount++] = currentChar;
-printf("%c", currentChar);
 			}
 		}
 	}
-	printf("\n\n");
 	return tempContainer;
 }
 
@@ -62,11 +60,9 @@ void writeCharToFile(char c, char *fileName) {
 	fclose(encryptedFile);
 }
 
-void encodeFile (FileContainer files, char * msgName) {
+void encodeFile (FileContainer files, char * msgName, int d) {
 
-	int currentInt;
-	char currentChar;
-
+	IndexHolder iHolder;
 	FILE* msgFile = fopen(msgName, "r");
 
 	files.msgCount = getSize(msgName);
@@ -79,38 +75,63 @@ void encodeFile (FileContainer files, char * msgName) {
 			remove(encryptedFileName);
 		}
 		
-		while (!feof(msgFile) && fscanf(msgFile, "%c", &currentChar) == 1) {
-			currentInt = findIntRepresentation(files, currentChar);
+		iHolder.lastIndex = 30000; // High number so first distance is OK
+		
+		while (!feof(msgFile) && fscanf(msgFile, "%c", &iHolder.currentChar) == 1) {
+			iHolder.currentIndex = findIntRepresentation(files, iHolder, d);
 			
-			if (currentInt != 0) {
-				writeIntToFile(currentInt, encryptedFileName);
+			if (iHolder.currentIndex != 0) {
+				writeIntToFile(iHolder.currentIndex, encryptedFileName);
 			} else {
-				writeCharToFile(currentChar, encryptedFileName);
+				writeCharToFile(iHolder.currentChar, encryptedFileName);
 			}
+			iHolder.lastIndex = iHolder.currentIndex;
 		}
 	}
 	fclose(msgFile);
 }
 
-int findIntRepresentation(FileContainer files, char c) {
+int findIntRepresentation(FileContainer files, IndexHolder iHolder, int d) {
 	int i = 0;
+	int diff = 0;
 	
-	if (isupper(c)) { // Check if char is uppercase
-		c = tolower(c);
+	if (isupper(iHolder.currentChar)) { // Check if char is uppercase
+		iHolder.currentChar = tolower(iHolder.currentChar);
 		for (i = 0; i <= files.keyCount; i++) {
-			if (c == files.key[i]) {
-				return ((i + 1) * (-1));
+			if (iHolder.currentChar == files.key[i]) {
+				iHolder.currentIndex = i;
+				diff = makePositive(iHolder.lastIndex - iHolder.currentIndex);
+				if (diff >= d) {
+					return ((iHolder.currentIndex + 1) * (-1));
+				}
 			}
 		}
-	} else if (islower(c)) {
+		printMessage(TYPE_ERROR, ERROR_INVALID_KEY);
+		remove(decryptedFileName);
+		exit(0);
+	} else if (islower(iHolder.currentChar)) {
 		for (i = 0; i <= files.keyCount; i++) {
-			if (c == files.key[i]) {
-				return (i + 1);
+			if (iHolder.currentChar == files.key[i]) {
+				iHolder.currentIndex = i;
+				diff = makePositive(iHolder.lastIndex - iHolder.currentIndex);
+				if (diff >= d) {
+					return (iHolder.currentIndex + 1);
+				}
 			}
 		}
+		printMessage(TYPE_ERROR, ERROR_INVALID_KEY);
+		remove(decryptedFileName);
+		exit(0);
 	}
 	
 	return 0;
+}
+
+int makePositive(int i) {
+	if (i < 0) {
+		i *= (-1);
+	}
+	return i;
 }
 
 void decodeFile (FileContainer files, char * msgName) {
@@ -157,19 +178,4 @@ char findCharRepresentation(FileContainer files, int index) {
 	
 	return c;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

@@ -1,5 +1,6 @@
-Denne meldingen skal krypteres :)! 
+This message shall be encoded! :)
 
-Så fort det er gjort skal den dekrypteres igjen, med bruk av samme program. 
+When it's done, it shall be decoded back to it's original state - by the same program.
+
 
 - Magnus Brurås
