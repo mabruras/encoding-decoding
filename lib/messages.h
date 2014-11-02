@@ -20,5 +20,5 @@
 #define INFO_ENCODING_END "Encoding of message complete!"
 #define INFO_DECODING_END "Decoding of message complete!"
 #define CHOICE_EXIT "You choose to quit.\nShutting down program..."
-#define INFO_SAFETY_LEVEL "What safety level do you want? \nHigher number requires longer key [1-9]:"
+#define INFO_SAFETY_LEVEL "What safety level do you want [1-9]? \n(Higher number requires larger key):"
 

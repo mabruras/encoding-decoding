@@ -20,9 +20,9 @@ int main (int argc, char **argv) {
 	// Check if the program was started with two parameters (file and key)
 	if (argc == 3){
 		FileContainer files;
+		int securityDistance;
 		
 		if (checkFiles(argv) != 0) {
-			int securityDistance = getWantedSecLvl();
 			files = openAndReadKey(argv[2]);
 			char action = getUserInput();
 			int choice = encodeOrDecode(action);
@@ -32,6 +32,8 @@ int main (int argc, char **argv) {
 				printMessage(TYPE_INFO, CHOICE_EXIT);
 				exit(0);
 			case 1:
+				securityDistance = getWantedSecLvl();
+				
 				printMessage(TYPE_INFO, INFO_ENCODING_START);
 				encodeFile(files, argv[1], securityDistance);
 				printMessage(TYPE_INFO, INFO_ENCODING_END);

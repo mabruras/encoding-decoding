@@ -47,7 +47,6 @@ int toInt(char c){
 
 char getUserInput() {
 	char userInput;
-	getchar();
 	do {
 		printMessage(TYPE_INPUT, INFO_ENCODE_OR_DECODE);
 		scanf("%c", &userInput);

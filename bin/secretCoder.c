@@ -25,7 +25,6 @@ FileContainer collapseKey(char *keyName) {
 		memset(tempContainer.key, 0, sizeof(tempContainer.key));
 		tempContainer.keyCount = 0;
 
-		printf("Key: ");
 		while (!feof(keyFile) && fscanf(keyFile, "%c", &currentChar) == 1) {
 			if (isalpha(currentChar)) {
 				if (isupper(currentChar)) {
@@ -70,6 +69,7 @@ void encodeFile (FileContainer files, char * msgName, int d) {
 
 	if (files.msgCount == 0 || files.keyCount == 0) {
 		printMessage(TYPE_ERROR, ERROR_UNKNOWN);
+		exit(0);
 	} else {
 		if (fileExists(encryptedFileName) == 1) {
 			remove(encryptedFileName);
