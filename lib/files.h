@@ -14,8 +14,9 @@
 #include "files.h"
 
 typedef struct fileContainer {
-	char* msg;
-	char* key;
+	int *msg;
+	char *key;
 	int keyCount;
+	int msgCount;
 } FileContainer;
 

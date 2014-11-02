@@ -13,10 +13,11 @@
 #include "userInteraction.h"
 #include "files.h"
 
-int checkFiles(FileContainer files);
+int checkFiles(char **argv);
 
 int fileExists (const char *fileName);
 
 int getSize(char* v);
 
-FileContainer openAndReadFiles(FileContainer files);
+FileContainer openAndReadKey(char *keyName);
+

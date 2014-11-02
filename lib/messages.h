@@ -1,23 +1,12 @@
 // #include "../lib/globallib.h"
 #pragma once
 
-#include <stdio.h>
-#include <ctype.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/stat.h>
-
-#include "fileHandling.h"
-#include "messages.h"
-#include "secretCoder.h"
-#include "userInteraction.h"
-#include "files.h"
 
 #define TYPE_ERROR "[ERROR]"
 #define TYPE_INPUT "[INPUT]"
 #define TYPE_INFO "[INFO]"
 #define ERROR_PARAMETERS "You need to send in two files; \n* File to en-/decode \n* File containing the decryption key."
-#define ERROR_FILE_NOT_FOUND "One of the files was not found;"
+#define ERROR_FILE_NOT_FOUND "One of the files was not found!"
 #define ERROR_INVALID_KEY "The key was not valid, missing one or more operands"
 #define ERROR_LOAD_FILE "One or both of the files is corrupt."
 #define ERROR_SAVE_FILE "Something went wrong; could not save file."
@@ -30,4 +19,4 @@
 #define INFO_DECODING_START "Starting to decode the message..."
 #define INFO_ENCODING_END "Encoding of message complete!"
 #define INFO_DECODING_END "Decoding of message complete!"
-#define CHOICE_EXIT "You choose to quit.\nShutting down program..."
+#define CHOICE_EXIT "You choose to quit.\n[INFO] : Shutting down program..."

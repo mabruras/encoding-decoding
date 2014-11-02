@@ -10,10 +10,14 @@
 #include "../lib/userInteraction.h"
 #include "../lib/files.h"
 
-int checkFiles(FileContainer files) {
-	int msg = fileExists(files.msg);
-	int key = fileExists(files.key);
-	
+int checkFiles(char **argv) {
+	int msg = fileExists(argv[1]);
+	int key = fileExists(argv[2]);
+
+	if (msg == 0 || key == 0) {
+		printMessage(TYPE_ERROR, ERROR_FILE_NOT_FOUND);
+	}
+
 	return (msg * key);
 }
 
@@ -22,7 +26,6 @@ int fileExists (const char *fileName) {
 		return 1;
 	}
 
-	printMessage(TYPE_ERROR, ERROR_FILE_NOT_FOUND);
 	return 0;
 }
 
@@ -35,20 +38,20 @@ int getSize(char* v) {
 	return size;
 }
 
-FileContainer openAndReadFiles(FileContainer files) {
+FileContainer openAndReadKey(char *keyName) {
 	FileContainer tempContainer;
+	FileContainer files;
 
-	FILE* keyFile = fopen(files.key, "r");
-	files.key = malloc(getSize(files.key) * sizeof(int));
-	tempContainer = collapseKey(keyFile);
-	files.key = tempContainer.key;
-
-	FILE* messageFile = fopen(files.msg, "r");
-	files.msg = malloc(getSize(files.msg) * sizeof(int));
-	tempContainer = readFile(messageFile);
+/*
+	tempContainer = readFile(argv[1]);
 	files.msg = tempContainer.msg;
-
-	printMessage(TYPE_INFO, INFO_FILES_OK);
+	files.msgCount = tempContainer.msgCount;
+*/
+	
+	tempContainer = collapseKey(keyName);
+	files.key = tempContainer.key;
+	files.keyCount = tempContainer.keyCount;
+	printMessage(TYPE_INFO, INFO_KEY_LOADED);
 
 	return files;
 }

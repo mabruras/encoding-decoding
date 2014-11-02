@@ -21,13 +21,9 @@ int main (int argc, char **argv) {
 	if (argc == 3){
 		FileContainer files;
 		
-		files.msg = argv[1];
-		files.key = argv[2];
-
-		if (checkFiles(files) != 0) {
-			files = openAndReadFiles(files);
+		if (checkFiles(argv) != 0) {
+			files = openAndReadKey(argv[2]);
 			char action = getUserInput();
-			
 			int choice = encodeOrDecode(action);
 
 			switch (encodeOrDecode(action)) {
@@ -36,19 +32,17 @@ int main (int argc, char **argv) {
 				exit(0);
 			case 1:
 				printMessage(TYPE_INFO, INFO_ENCODING_START);
-				encodeFile(files);
+				encodeFile(files, argv[1]);
 				printMessage(TYPE_INFO, INFO_ENCODING_END);
 				break;
 			case 2:
 				printMessage(TYPE_INFO, INFO_DECODING_START);
-				decodeFile(files);
+				decodeFile(files, argv[1]);
 				printMessage(TYPE_INFO, INFO_DECODING_END);
 				break;
 			default:
 				break;
 			}
-			
-			printf("hello");
 		}
 	} else {
 		printMessage(TYPE_ERROR, ERROR_PARAMETERS);

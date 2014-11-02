@@ -1,9 +1,9 @@
 CC=gcc
-CFLAGS= -std=c11
+#CFLAGS= -std=c11
 
 #files
 OBJECTS = homeExam.o fileHandling.o secretCoder.o userInteraction.o
-OUTPUT = HomeExam
+OUTPUT = homeExam
 
 all: $(OBJECTS)
 	$(CC) $(CFLAGS) -o $(OUTPUT) $(OBJECTS)
