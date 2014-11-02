@@ -34,6 +34,7 @@ FileContainer collapseKey(char *keyName) {
 			}
 		}
 	}
+	fclose(keyFile);
 	return tempContainer;
 }
 
@@ -88,6 +89,8 @@ void encodeFile (FileContainer files, char * msgName, int d) {
 			iHolder.lastIndex = iHolder.currentIndex;
 		}
 	}
+	free(files.msg);
+	free(files.key);
 	fclose(msgFile);
 }
 
@@ -157,6 +160,8 @@ void decodeFile (FileContainer files, char * msgName) {
 			}
 		}
 	}
+	free(files.msg);
+	free(files.key);
 	fclose(msgFile);
 }
 

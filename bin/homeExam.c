@@ -30,6 +30,7 @@ int main (int argc, char **argv) {
 			switch (encodeOrDecode(action)) {
 			case 0:
 				printMessage(TYPE_INFO, CHOICE_EXIT);
+				free(files.key);
 				exit(0);
 			case 1:
 				securityDistance = getWantedSecLvl();
